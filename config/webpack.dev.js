@@ -8,7 +8,7 @@ module.exports = webpackMerge(commonConfig, {
   devtool: 'cheap-module-eval-source-map',
   output: {
     path: path.resolve(rootDir, 'dist'),
-    publicPath: 'http://localhost:8080/',
+    publicPath: '/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js'
   },
