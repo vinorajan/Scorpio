@@ -1,4 +1,9 @@
 <h1>
   {{title}}
 </h1>
-<img src="../assets/img/dashboard.jpg" />
+<img src="../assets/img/dashboard.jpg" alt='img'/>
+
+
+<div>{{(person|async)|json}}</div>
+
+<button (click)="fetchdatafromserver()">Fetch Data</button>

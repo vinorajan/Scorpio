@@ -1,5 +1,9 @@
 h1{
-    font-size: 25px;
-    font-weight:bold;
+    height:200px;
+    width:200px;
+    background: #00ff00 url("../assets/img/dashboard1.jpg") no-repeat fixed center;
+}
+
+h1{
     color: red;
 }
