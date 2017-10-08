@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const rootDir = path.resolve(__dirname, '..');
 
@@ -18,7 +19,7 @@ module.exports = {
       test: /\.ts$/,
       loaders: [{
                loader: 'awesome-typescript-loader',
-                  options: { configFileName:  path.resolve(__dirname, 'tsconfig.json') }
+                  options: { configFileName:  path.resolve(rootDir, 'tsconfig.json') }
                 } , 'angular2-template-loader'],
                 loaders: ['awesome-typescript-loader', 'angular2-template-loader']
     }, {
@@ -28,22 +29,22 @@ module.exports = {
     {
       test: /\.css$/,
       include: path.resolve(rootDir, 'src/assets'),
-      loader: ExtractTextPlugin.extract({use:[{loader:'css-loader'}], fallback: 'style-loader' })
+      loader: ExtractTextPlugin.extract({use:[{loader:'css-loader?sourceMap'}], fallback: 'style-loader' })
     },
     {
       test: /\.css$/,
       include: path.resolve(rootDir, 'src/app'),
-      loader: 'raw-loader'
-    },{
-      test: /\.(png|jpg|jpe?g|gif|svg|ico)$/,
+      loaders: 'raw-loader'
+    }/*,{
+      test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
       include: path.resolve(rootDir, 'src/assets'),
-      loader: 'file-loader?name=assets/images/[name].[hash].[ext]'
+      loader: 'file-loader?name=[name].[ext]&outputPath=assets/images/&publicPath=assets/images/'
     },
     {
       test: /\.(woff|woff2|ttf|eot)$/,
       include: path.resolve(rootDir, 'src/assets'),
       loader: 'file-loader?name=assets/fonts/[name].[hash].[ext]'
-    }]
+    }*/]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -54,7 +55,11 @@ module.exports = {
     }),
     new webpack.ContextReplacementPlugin(
       /angular(\\|\/)core(\\|\/)@angular/,
-      path.resolve(rootDir, '/src')
-    )
-    ]
+      path.resolve(__dirname, '/src')
+    ),
+    new CopyWebpackPlugin([{
+      from: 'src/assets/images',
+      to: './assets/images'
+    }])
+  ]
 };
